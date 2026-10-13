@@ -1,0 +1,25 @@
+女生隊加扣分 App｜PWA 安裝版
+
+此版保留已通過測試的第44期 App 程式，增加 manifest、圖示及 Service Worker。
+
+【重要】直接雙擊 index.html 可以在電腦上測試，但不會出現完整 PWA 安裝功能。
+必須把整個資料夾部署到 HTTPS 網站（例如 GitHub Pages），保留目錄結構。
+
+【部署方式：GitHub Pages】
+1. 建立私人測試以外的專用 GitHub 儲存庫（GitHub Pages 免費方案通常需要公開儲存庫）。
+2. 只上傳本壓縮檔中的 index.html、manifest.webmanifest、sw.js、icons 資料夾。
+3. 不要上傳真實學生名冊、Excel 範本或輸出檔案。
+4. 到儲存庫 Settings > Pages，選擇 Deploy from a branch，main、/(root)，儲存。
+5. 待部署完成後，開啟 GitHub Pages 提供的 https:// 網址。
+
+【安裝】
+iPhone：使用 Safari 開啟 HTTPS 網址 > 分享 > 加入主畫面 > 加入。
+macOS：Safari 支援的版本可用「檔案 > 加入 Dock」；Chrome 亦可用其安裝網站功能。
+Windows：Chrome/Edge 開啟 HTTPS 網址，使用網址列安裝圖示或瀏覽器選單的安裝功能。
+
+【注意】
+- 第一次開啟需要連網載入 xlsx-populate Excel 函式庫，之後可能由快取提供，但不保證完全離線。
+- 每次重新開啟 App 仍須匯入名冊與範本；目前沒有跨裝置同步。
+- 此版尚未在三種裝置完成實機安裝測試。
+- 學生名冊與匯入範本應在裝置本機選取，絕對不要上傳到公開網站儲存庫。
+- 上線前請確認學校資訊安全與個資規範。
