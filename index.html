@@ -12,14 +12,18 @@ function readRoster(sheet){
  const normalize=value=>String(value==null?'':value).normalize('NFKC').replace(/[\s\u200b\ufeff]/g,'');
  let headerRow=0,columns=null;
  for(let row=1;row<=Math.min(20,lastRow);row++){
-  const found={};let ambiguous=false;
-  for(let col=1;col<=lastCol;col++){
-   const title=normalize(sheet.cell(row,col).value());
+  // A blank heading separates the primary roster from auxiliary lookup tables.
+  // Use the leftmost complete table; never combine columns across tables.
+  const groups=[];let found={},ambiguous=false;
+  for(let col=1;col<=lastCol+1;col++){
+   const title=col<=lastCol?normalize(sheet.cell(row,col).value()):'';
+   if(!title){groups.push({found,ambiguous});found={};ambiguous=false;continue}
    for(const [key,names] of Object.entries(aliases))if(names.includes(title)){if(found[key])ambiguous=true;found[key]=col}
   }
-  if(Object.keys(aliases).every(key=>found[key])){
-   if(ambiguous)throw Error('名冊欄位名稱重複，請確認女生隊號、建制隊號、姓名及學籍號碼各有一欄');
-   headerRow=row;columns=found;break;
+  const group=groups.find(group=>Object.keys(aliases).every(key=>group.found[key]));
+  if(group){
+   if(group.ambiguous)throw Error('同一名冊區塊的欄位名稱重複，請確認女生隊號、建制隊號、姓名及學籍號碼各有一欄');
+   headerRow=row;columns=group.found;break;
   }
  }
  if(!columns)throw Error('找不到完整欄位標題：女生隊號、建制隊號、姓名、學籍號碼（或完整學籍號碼）。欄位順序不限，標題須在前 20 列。');
